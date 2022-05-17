@@ -1,0 +1,21 @@
+<script src="https://js.chilipiper.com/marketing.js" type="text/javascript" async></script>
+<script>
+var cpTenantDomain = "domain"; // replace with your subdomain
+var cpRouterName = "router"; // replace with the router's name
+var lead
+// build lead object
+window.addEventListener("message", function (event) {
+   if (event.data.type === "hsFormCallback" && event.data.eventName === "onFormSubmit") {
+     window.lead = {}; for (key in event.data.data) { lead[event.data.data[key].name] = event.data.data[key].value; }
+   }
+});
+//call ChiliPiper
+window.addEventListener("message", function (event) {
+   if (event.data.type === "hsFormCallback" && event.data.eventName === "onFormSubmitted")
+      ChiliPiper.submit(cpTenantDomain, cpRouterName, {
+         map: true,
+         lead: lead
+      });
+   }
+);
+</script>
